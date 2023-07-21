@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * add - Concatenates 2 strings
@@ -97,22 +97,21 @@ void prints(char *s)
  */
 char *enpath(char **list)
 {
-	char *item;
-	char *value;
-	int j = 0;
+        char *item = NULL;
+        char *value = NULL;
+        char s[2500];
+        int j = 0;
 
-	if (list == NULL)
-		return (NULL);
-	while (list[j] != NULL)
-	{
-		item = strtok(list[j], "=");
-		if (str_cmp(item, "PATH") == 0)
-		{
-			value = strtok(NULL, "=");
-			return (value);
-		}
-		j++;
-	}
-	return (NULL);
+        while (list[j] != NULL)
+        {
+                strcpy(s, list[j]);
+                item = strtok(s, "=");
+                if (str_cmp(item, "PATH") == 0)
+                {
+                        value = strtok(NULL, "=");
+                        return (value);
+                }
+                j++;
+        }
+        return (NULL);
 }
-

@@ -1,18 +1,18 @@
-#include "main.h"
+#include "shell.h"
 
-char *get_path(char *dir, char**env)
+char *get_path(char *dir, char **env)
 {
 	char *buff = malloc(128);
-	char *path = enpath(env);
 	char **dirlist = NULL;
 	char *tok = NULL;
+	char *path = enpath(env);
 	struct stat st;
 	int j = 0;
 	int i = 1;
 	
 	if (stat(dir, &st) == 0)
 	{
-		copy(buff, dir);
+		strcpy(buff, dir);
 		return (buff);
 	}
 	dirlist = malloc(sizeof(char*) * 32);
@@ -31,9 +31,9 @@ char *get_path(char *dir, char**env)
 	j = 0;
 	while (dirlist[j] != NULL)
 	{
-		copy(buff, dirlist[j]);
-		add(buff, "/");
-		add(buff, dir);
+		strcpy(buff, dirlist[j]);
+		strcat(buff, "/");
+		strcat(buff, dir);
 		if (stat(buff, &st) == 0)
 		{
 			free(dirlist);
