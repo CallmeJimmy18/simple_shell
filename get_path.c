@@ -13,6 +13,7 @@ char *get_path(char *dir, char **env)
 	if (stat(dir, &st) == 0)
 	{
 		strcpy(buff, dir);
+		free(path);
 		return (buff);
 	}
 	dirlist = malloc(sizeof(char*) * 32);
@@ -37,10 +38,12 @@ char *get_path(char *dir, char **env)
 		if (stat(buff, &st) == 0)
 		{
 			free(dirlist);
+			free(path);
 			return (buff);
 		}
 		j++;
 	}
+	free(path);
 	free(buff);
 	free(dirlist);
 	return(NULL);
