@@ -9,6 +9,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+void freed(char **args, char *ptr);
+void token_p(char *path, char **dirlist);
+int ncopy(char *dest, char *src, int n);
 void tokeniz(char *cmd, char **args);
 int _strcmp(char *s1, char *s2);
 int str_cmp(char *s1, char *s2);

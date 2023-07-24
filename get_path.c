@@ -1,5 +1,10 @@
 #include "shell.h"
-
+/**
+ * get_path - Returns full path
+ * @dir: command name
+ * @env: environment
+ * Return: buff on success, Null if fail
+ */
 char *get_path(char *dir, char **env)
 {
 	char *buff = malloc(128);
@@ -9,32 +14,25 @@ char *get_path(char *dir, char **env)
 	struct stat st;
 	int j = 0;
 	int i = 1;
-	
+
 	if (stat(dir, &st) == 0)
 	{
-		strcpy(buff, dir);
+		copy(buff, dir);
 		free(path);
 		return (buff);
 	}
-	dirlist = malloc(sizeof(char*) * 32);
+	dirlist = malloc(sizeof(char *) * 32);
 	while (i < 31)
 	{
 		dirlist[i] = NULL;
 		i++;
 	}
-	tok = strtok(path, ":");
-	while (tok != NULL)
-	{
-		dirlist[j] = tok;
-		tok = strtok(NULL, ":");
-		j++;
-	}
-	j = 0;
+	token_p(path, dirlist);
 	while (dirlist[j] != NULL)
 	{
-		strcpy(buff, dirlist[j]);
-		strcat(buff, "/");
-		strcat(buff, dir);
+		copy(buff, dirlist[j]);
+		add(buff, "/");
+		add(buff, dir);
 		if (stat(buff, &st) == 0)
 		{
 			free(dirlist);
@@ -46,5 +44,5 @@ char *get_path(char *dir, char **env)
 	free(path);
 	free(buff);
 	free(dirlist);
-	return(NULL);
+	return (NULL);
 }

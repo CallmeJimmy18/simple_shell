@@ -98,21 +98,21 @@ void prints(char *s)
 char *enpath(char **list)
 {
 	char *value = malloc(128);
-        char s[5] = {'P', 'A', 'T', 'H', '\0'};
-        char dup[128];
-        int j = 0;
+	char s[5] = {'P', 'A', 'T', 'H', '\0'};
+	char dup[128];
+	int j = 0;
 
-        while (list[j] != NULL)
-        {
-                strncpy(s, list[j], 4);
-                if (str_cmp(s, "PATH") == 0)
-                {
-                        strcpy(dup, list[j]);
-                        strtok(dup, "=");
-                        strcpy(value, strtok(NULL, "="));
-                        return (value);
-                }
-                j++;
-        }
-        return ("could not find\n");
+	while (list[j] != NULL)
+	{
+		ncopy(s, list[j], 4);
+		if (str_cmp(s, "PATH") == 0)
+		{
+			copy(dup, list[j]);
+			strtok(dup, "=");
+			copy(value, strtok(NULL, "="));
+			return (value);
+		}
+		j++;
+	}
+	return (NULL);
 }
