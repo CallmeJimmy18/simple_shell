@@ -11,6 +11,12 @@ char *cmd = NULL;
 #define PATH {\
 	free(args);\
 	}
+#define IERROR {\
+	prints(argv[0]);\
+	prints(": 1: ");\
+	prints(args[0]);\
+	prints(": not found\n");\
+	}
 #define ERROR {\
 	prints(argv[0]);\
 	prints(": No such file or directory\n");\
@@ -68,7 +74,10 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 		path = get_path(args[0], env);
 		if (path == NULL)
 		{
-			ERROR;
+			if (inter != 1)
+				IERROR;
+			if (inter == 1)
+				ERROR;
 			freed(args, path);
 			continue;
 		}
