@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <signal.h>
 
 void freed(char **args, char *ptr);
 void token_p(char *path, char **dirlist);

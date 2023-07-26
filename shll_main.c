@@ -1,4 +1,5 @@
 #include "shell.h"
+char *cmd = NULL;
 #define EXITED {\
 	break;\
 	}
@@ -12,8 +13,22 @@
 	}
 #define ERROR {\
 	prints(argv[0]);\
-	prints(": No file or directory\n");\
+	prints(": No such file or directory\n");\
 	}
+#define FEXIT {\
+	free(cmd);\
+	exit(0);\
+	}
+/**
+ * sig_hand - handles signal of SIGINT
+ * @num: unused variables
+ */
+void sig_hand(int num __attribute__((unused)))
+{
+	free(cmd);
+	prints("\n");
+	exit(0);
+}
 /**
  * main - Runs shell
  * @argc: argument count
@@ -23,21 +38,30 @@
  */
 int main(int argc __attribute__((unused)), char **argv, char **env)
 {
-	char *cmd = NULL, *path = NULL;
-	ssize_t cmdlin;
+	char *path = NULL;
+	ssize_t cmdlin = 0;
 	size_t b = 0;
+	int inter = isatty(STDIN_FILENO);
 	char **args = NULL;
 	pid_t pid;
 
+	signal(SIGINT, sig_hand);
 	while (1)
 	{
-		prints("//Gar-Lia:==> ");
+		if (inter == 1)
+			prints("//Gar-Lia:==> ");
 		cmdlin = getline(&cmd, &b, stdin);
 		if (cmdlin == 1)
 			continue;
+		else if (cmdlin == -1)
+		{
+			if (inter == 1)
+				printf("\n");
+			FEXIT;
+		}
 		args = malloc(sizeof(char *) * 32);
 		tokeniz(cmd, args);
-		if (_strcmp(args[0], "exit") == 0)
+		if (_strcmp(args[0], "exit") == 0 || args[0][0] == 4)
 			EXITED;
 		if (_strcmp(args[0], "env") == 0)
 			ENV;
