@@ -9,7 +9,6 @@ char *get_path(char *dir, char **env)
 {
 	char *buff = malloc(128);
 	char **dirlist = NULL;
-	char *tok = NULL;
 	char *path = enpath(env);
 	struct stat st;
 	int j = 0;

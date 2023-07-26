@@ -1,6 +1,5 @@
 #include "shell.h"
 #define EXITED {\
-	printf("exit\n");\
 	break;\
 	}
 #define ENV {\
@@ -22,7 +21,7 @@
  * @env: environment
  * Return: 0 on success, 1 on fail
  */
-int main(int argc, char **argv, char **env)
+int main(int argc __attribute__((unused)), char **argv, char **env)
 {
 	char *cmd = NULL, *path = NULL;
 	ssize_t cmdlin;
